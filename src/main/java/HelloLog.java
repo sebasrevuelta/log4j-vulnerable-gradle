@@ -13,6 +13,6 @@ public class HelloLog {
         logger.info("Test: "+userInput);
 
         // %m{nolookups} has no effect for the following line
-        // logger.printf(Level.INFO,"Test: %s", userInput);
+        logger.printf(Level.INFO,"Test: %s", userInput);
     }
 }
