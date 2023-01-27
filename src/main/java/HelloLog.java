@@ -9,10 +9,10 @@ public class HelloLog {
     public static void main(String[] args) {
         String userInput = "${jndi:http://localhost/AAAA/BBBB}";
 
-        // passing user input into the logger
+        // passing user input into the logger, it a log4j critical vuln
         logger.info("Test: "+userInput);
 
         // %m{nolookups} has no effect for the following line
-        // logger.printf(Level.INFO,"Test: %s", userInput);
+        logger.printf(Level.INFO,"Test: %s", userInput);
     }
 }
