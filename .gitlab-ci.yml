@@ -11,6 +11,7 @@ sast-semgrep-app:
   stage: test
   image: returntocorp/semgrep
   script:
+    - echo $SEMGREP_APP_TOKEN
     - semgrep ci
   rules:
     # Scan changed files in MRs, (diff-aware scanning):
