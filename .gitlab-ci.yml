@@ -12,6 +12,7 @@ sast-semgrep-app:
   image: returntocorp/semgrep
   script:
     - echo $SEMGREP_APP_TOKEN
+    - echo $PAT
     - semgrep ci
   rules:
     # Scan changed files in MRs, (diff-aware scanning):
