@@ -11,8 +11,6 @@ sast-semgrep-app:
   stage: test
   image: returntocorp/semgrep
   script:
-    - echo $SEMGREP_APP_TOKEN
-    - echo $PAT
     - semgrep ci --verbose
   rules:
     # Scan changed files in MRs, (diff-aware scanning):
