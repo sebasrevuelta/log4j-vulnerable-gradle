@@ -2,6 +2,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Level;
 
+//Test class
 public class HelloLog {
 
     private static final Logger logger = LogManager.getLogger();
@@ -13,6 +14,6 @@ public class HelloLog {
         logger.info("Test: "+userInput);
 
         // %m{nolookups} has no effect for the following line
-        logger.printf(Level.INFO,"Test: %s", userInput);
+        //logger.printf(Level.INFO,"Test: %s", userInput);
     }
 }
