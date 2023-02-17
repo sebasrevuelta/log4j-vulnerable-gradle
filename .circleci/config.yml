@@ -43,4 +43,4 @@ workflows:
   main:
     jobs:
       - semgrep-scan:
-         contexts: dev 
+         context: dev 
