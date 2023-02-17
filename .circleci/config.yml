@@ -37,7 +37,7 @@ jobs:
           name: "Semgrep scan"
           command: |
              echo 'export SEMGREP_APP_TOKEN=$SEMGREP_APP_TOKEN' >> $BASH_ENV
-             echo 'export SEMGREP_REPO_NAME=r2c-CSE/from-circleci/log4j-vulnerable-gradle' >> $BASH_ENV
+             echo 'export SEMGREP_REPO_NAME=$SEMGREP_REPO_NAME' >> $BASH_ENV
              semgrep ci
 workflows:
   main:
