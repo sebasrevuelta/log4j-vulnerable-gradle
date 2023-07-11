@@ -22,7 +22,7 @@ pipeline {
       stage('Semgrep-Scan') {
         steps {
                 script {
-                  sh 'echo env.GIT_BRANCH'
+                  echo "Hello from ${env.GIT_BRANCH} branch"
                     if (env.GIT_BRANCH == 'main') {
                           sh '''docker pull returntocorp/semgrep && \
                             docker run \
