@@ -13,7 +13,9 @@ pipeline {
 
       stage ('Generate-LockFile') {
         steps {
-              sh "gradle dependencies --write-locks"
+          withGradle {
+            sh './gradlew dependencies --write-locks'
+          }
         }
       }
       
