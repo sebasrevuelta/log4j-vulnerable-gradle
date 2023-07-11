@@ -23,7 +23,8 @@ pipeline {
         steps {
                 script {
                   echo "Hello from ${env.GIT_BRANCH} branch"
-                    if (env.GIT_BRANCH == 'main') {
+                  echo "Main branch: SEMGREP_BASELINE_REF"
+                    if (env.GIT_BRANCH == $SEMGREP_BASELINE_REF) {
                           sh '''docker pull returntocorp/semgrep && \
                             docker run \
                             -e SEMGREP_APP_TOKEN=$SEMGREP_APP_TOKEN \
