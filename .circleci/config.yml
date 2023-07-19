@@ -26,7 +26,7 @@ jobs:
           command: |
             echo "This is a pull request semgrep scan"
             git fetch origin "+refs/heads/*:refs/remotes/origin/*"
-            semgrep ci --baseline-commit=$(git merge-base main HEAD)
+            semgrep ci --baseline-commit=$(git merge-base HEAD $SEMGREP_BASELINE_REF)
 workflows:
   version: 2
   scan:
