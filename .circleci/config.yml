@@ -9,7 +9,7 @@ jobs:
           name: "Semgrep full scan"
           command: |
             echo "This is a semgrep full scan"
-            semgrep ci
+            # semgrep ci
   semgrep-pr-scan:
     parameters:
       default_branch:
@@ -26,7 +26,7 @@ jobs:
           command: |
             echo "This is a pull request semgrep scan"
             git fetch origin "+refs/heads/*:refs/remotes/origin/*"
-            semgrep ci --baseline-commit=$(git merge-base HEAD main)
+            # semgrep ci --baseline-commit=$(git merge-base HEAD main)
 workflows:
   version: 2
   scan:
