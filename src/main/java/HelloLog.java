@@ -13,7 +13,7 @@ public class HelloLog {
         // passing user input into the logger, it a log4j critical vuln
         //logger.info("Test: "+userInput);
 
-        // %m{nolookups} has no effect for the following line
+        // TODO: %m{nolookups} has no effect for the following line
         //logger.printf(Level.INFO,"Test: %s", userInput);
 
         // %m{nolookups} has no effect for the following line
