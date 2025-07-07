@@ -44,5 +44,5 @@ jobs:
       #  with:
       #    name: gradlelockfile
       - run: |
-          pak add openjdk21
+          apk add openjdk21
           semgrep ci --allow-local-builds
