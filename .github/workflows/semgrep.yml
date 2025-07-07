@@ -11,26 +11,26 @@ on:
   - cron: 05 5 * * 1
 name: Semgrep
 jobs:
-  #buildGradleLockFile: 
-  #    runs-on: ubuntu-latest
-  #    steps:
-  #    - uses: actions/checkout@v3
-  #    - name: Set up JDK 17
-  #      uses: actions/setup-java@v3
-  #      with:
-  #        java-version: '17'
-  #        distribution: 'temurin'
-  #    - name: Build with Gradle
-  #      run: gradle clean compileJava
-  #    - name: Build Dependency Lock File
-  #      run: gradle dependencies --write-locks
-  #    - name: Upload Gradle Lock File
-  #      uses: actions/upload-artifact@v3
-  #      with:
-  #        name: gradlelockfile
-  #        path: gradle.lockfile
+  buildGradleLockFile: 
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build with Gradle
+        run: gradle clean compileJava
+      - name: Build Dependency Lock File
+        run: gradle dependencies --write-locks
+      - name: Upload Gradle Lock File
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradlelockfile
+          path: gradle.lockfile
   semgrep:
-    #needs: buildGradleLockFile
+    needs: buildGradleLockFile
     name: Scan
     runs-on: ubuntu-latest
     env:
@@ -39,10 +39,11 @@ jobs:
       image: semgrep/semgrep
     steps:
       - uses: actions/checkout@v4
-      #- name: Download artifact from previous job
-      #  uses: actions/download-artifact@v3
-      #  with:
-      #    name: gradlelockfile
+      - name: Download artifact from previous job
+        uses: actions/download-artifact@v4
+        with:
+          name: gradlelockfile
       - run: |
-          apk add openjdk21
-          semgrep ci --allow-local-builds
+          apk add openjdk17
+          #semgrep ci --allow-local-builds
+          semgrep ci
