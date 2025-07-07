@@ -26,7 +26,9 @@ repositories {
 }
 
 dependencies {
-  implementation 'org.apache.logging.log4j:log4j-core:2.12.2'
+  implementation 'org.apache.logging.log4j:log4j-core:2.12.2' // Log4Shell vulnerable version
+  implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.5' // Vulnerable to deserialization
+  implementation 'commons-collections:commons-collections:3.2.1' // Also vulnerable to deserialization
 }
 
 dependencyLocking {
