@@ -49,3 +49,8 @@ publishing {
         }
     }
 }
+
+dependencyLocking {
+    // enable centralized dependency locking for this project
+    lockAllConfigurations()
+}
