@@ -93,5 +93,4 @@ jobs:
                 [ -x "$d/mvnw" ] || { printf '%s\n' '#!/bin/sh' 'set -e' \
                   'command -v mvn >/dev/null 2>&1 || { echo "mvn not found" >&2; exit 127; }; exec mvn "$@"' > "$d/mvnw"; chmod +x "$d/mvnw"; }
               done
-          fi
           semgrep ci --supply-chain --allow-local-builds 
