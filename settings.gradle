@@ -8,3 +8,4 @@
  */
 
 rootProject.name = 'log4j-vulnerable'
+include("app:services:tickets")
