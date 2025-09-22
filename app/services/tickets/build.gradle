@@ -1,0 +1,51 @@
+// app/services/tickets/build.gradle
+plugins {
+    id 'java-library'
+    id 'maven-publish' // ensures a publication/components exist for scanners to poke at
+}
+
+group = 'com.example.tickets'
+version = '0.1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    withSourcesJar()
+    withJavadocJar()
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    // Extra resolvable config so dependency scanners walk more graphs
+    scanOnly {
+        canBeConsumed = false
+        canBeResolved = true
+        description = 'Configuration used to help reproduce dependency-graph scans.'
+    }
+}
+
+dependencies {
+    api 'org.apache.commons:commons-lang3:3.14.0'
+    implementation 'com.google.guava:guava:33.2.1-jre'
+    // Something lightweight to resolve under the extra config:
+    scanOnly 'com.squareup.okio:okio:3.9.0'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+// Make sure there’s an outgoing artifact exposed as a Provider<RegularFile>.
+// Tools that wrap this via Gradle internals are what trigger the crash on newer Gradle.
+artifacts {
+    add('scanOnly', tasks.named('jar').flatMap { it.archiveFile })
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
