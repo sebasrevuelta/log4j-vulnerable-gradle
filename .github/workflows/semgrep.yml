@@ -44,53 +44,6 @@ jobs:
       #  with:
       #    name: gradlelockfile
       - run: |
-          #apk add openjdk17
-          #apk add maven
-          #semgrep ci --allow-local-builds --debug
-          #semgrep ci --supply-chain --allow-local-builds 
-          apk add --no-cache openjdk17-jdk curl unzip git maven
-          export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
-          export PATH="$JAVA_HOME/bin:$PATH"
-          java -version
-          GRADLE_VERSION=8.8
-          curl -fsSL "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" -o gradle.zip
-          unzip -q gradle.zip -d .gradle && rm gradle.zip
-          export PATH="$PWD/.gradle/gradle-${GRADLE_VERSION}/bin:$PATH"
-          export GRADLE_USER_HOME="${CI_PROJECT_DIR:-$PWD}/.gradle-home"
-          export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=false -Dorg.gradle.console=plain -Dorg.gradle.jvmargs=-Xmx1024m"
-          gradle --version
-          mkdir -p ~/.gradle/init.d
-          printf '%s\n' \
-            "beforeSettings { settings ->" \
-            "  settings.pluginManagement { repositories {" \
-            "    mavenLocal(); gradlePluginPortal(); mavenCentral();" \
-            "    def extra = System.getenv('EXTRA_PLUGIN_REPO'); if (extra) { maven { url = uri(extra) } }" \
-            "  }}" \
-            "  settings.dependencyResolutionManagement { repositoriesMode.set(org.gradle.api.initialization.resolve.RepositoriesMode.PREFER_PROJECT); repositories {" \
-            "    mavenLocal(); mavenCentral(); gradlePluginPortal();" \
-            "    def extra = System.getenv('EXTRA_MAVEN_REPO'); if (extra) { maven { url = uri(extra) } }" \
-            "  }}" \
-            "}" \
-            "gradle.rootProject { ext {" \
-            "  if (!ext.has('spring_boot_version') && System.getenv('SPRING_BOOT_VERSION')) spring_boot_version = System.getenv('SPRING_BOOT_VERSION')" \
-            "  if (!ext.has('springBootVersion') && System.getenv('SPRING_BOOT_VERSION')) springBootVersion = System.getenv('SPRING_BOOT_VERSION')" \
-            "  if (!ext.has('spring_dependency_management_version') && System.getenv('SPRING_DEP_MGMT_VERSION')) spring_dependency_management_version = System.getenv('SPRING_DEP_MGMT_VERSION')" \
-            "} }" > ~/.gradle/init.d/ssc-init.gradle
-  
-          # publish in-repo plugins to mavenLocal so 'engage.java-lib' resolves
-          if [ -d "./app/gradle-plugins" ]; then
-            (cd ./app/gradle-plugins && ./gradlew -Dorg.gradle.daemon=false publishToMavenLocal) || true
-          fi
-  
-          # wrappers fallbacks so Semgrep can call gradle/maven per-module
-          find . -type f \( -name build.gradle -o -name build.gradle.kts \) -print \
-            | xargs -r -n1 dirname | sort -u | while read -r d; do
-                [ -x "$d/gradlew" ] || { printf '%s\n' '#!/bin/sh' 'set -e' \
-                  'if [ -x "./gradlew" ]; then exec ./gradlew "$@"; else exec gradle "$@"; fi' > "$d/gradlew"; chmod +x "$d/gradlew"; }
-              done
-          find . -type f -name pom.xml -print \
-            | xargs -r -n1 dirname | sort -u | while read -r d; do
-                [ -x "$d/mvnw" ] || { printf '%s\n' '#!/bin/sh' 'set -e' \
-                  'command -v mvn >/dev/null 2>&1 || { echo "mvn not found" >&2; exit 127; }; exec mvn "$@"' > "$d/mvnw"; chmod +x "$d/mvnw"; }
-              done
+          apk add openjdk17
+          apk add maven
           semgrep ci --supply-chain --allow-local-builds 
