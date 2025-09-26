@@ -49,6 +49,8 @@ configurations {
 
 dependencies {
     implementation 'org.apache.logging.log4j:log4j-core:2.12.2'
+    // Note: this version is vulnerable (prior to 4.1.124.Final)
+    implementation 'io.netty:netty-codec-http2:4.1.121.Final'
 
     // Something lightweight to resolve under the extra configuration
     scanOnly 'com.squareup.okio:okio:3.9.0'
