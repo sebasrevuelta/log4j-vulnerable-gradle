@@ -44,4 +44,4 @@ jobs:
         with:
           name: gradlelockfile
       - run: |
-          semgrep ci --supply-chain 
+          semgrep ci --supply-chain --verbose
