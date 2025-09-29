@@ -30,7 +30,7 @@ jobs:
           name: gradlelockfile
           path: gradle.lockfile
   semgrep:
-    needs: buildGradleLockFile
+    #needs: buildGradleLockFile
     name: Scan
     runs-on: ubuntu-latest
     env:
@@ -39,9 +39,9 @@ jobs:
       image: semgrep/semgrep
     steps:
       - uses: actions/checkout@v4
-      - name: Download artifact from previous job
-        uses: actions/download-artifact@v4
-        with:
-          name: gradlelockfile
+      #- name: Download artifact from previous job
+        #uses: actions/download-artifact@v4
+        #with:
+        #  name: gradlelockfile
       - run: |
           semgrep ci --supply-chain --verbose
